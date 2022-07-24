@@ -36,23 +36,23 @@
         for (var item of arr) {
             index = item.indexOf(" ")
             value = item.substring(index + 1)
-            size = item.split(" ", 1)
-            if (size != 1) {
-                baseland = baseland + (+size)
-                cards = cards + (+size)
-            } else {
-                for (i in ddb_data) {
-                    if (ddb_data[i].Name == value) {
-                        cards = cards + 1
-                        match++
-                        score += (highest_score - ddb_data[i].Rank) * size
-                    }
+            size = parseInt(item.split(" ", 1))
+            //计算基本地
+            if (basic_land.get(value) == 0) {
+                baseland = baseland + size
+            }
+            //计算总牌数量
+            cards = cards + size
+            for (i in ddb_data) {
+                if (ddb_data[i].Name == value) {
+                    match++
+                    score += (highest_score - ddb_data[i].Rank) * size
+                    break
                 }
             }
         }
 
         if (score / (99 - baseland) > 1500) {
-            output = "1"
             score = score + 1500 * baseland
         }
         else {
@@ -78,6 +78,18 @@
         }
         document.getElementById('output').innerText = output
     }
+
+    const basic_land = new Map();
+    basic_land.set("Forest", 0)
+    basic_land.set("Plains", 0)
+    basic_land.set("Mountain", 0)
+    basic_land.set("Swamp", 0)
+    basic_land.set("Island", 0)
+    basic_land.set("Snow-Covered Plains", 0)
+    basic_land.set("Snow-Covered Island", 0)
+    basic_land.set("Snow-Covered Swamp", 0)
+    basic_land.set("Snow-Covered Mountain", 0)
+    basic_land.set("Snow-Covered Forest", 0)
 
     var ddb_data = [
         { "Name": "Abandon Reason", "Count": "1", "Percent": "0", "Rank": "1413", "Supercent": "0", "Superrank": "1448", "Identity_rank": "202", "Cmc": "3", "Colors": "R", "Color_identity": "R" },
