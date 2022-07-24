@@ -52,14 +52,6 @@
             }
         }
 
-        if (score / (99 - baseland) > 1500) {
-            score = score + 1500 * baseland
-        }
-        else {
-            score = score + score / (99 - baseland) * baseland
-        }
-
-
         output = ""
         output += "卡组总数为:" + cards + '\n'
         output += "数据库匹配到了:" + match + "cedh单卡！\n"
